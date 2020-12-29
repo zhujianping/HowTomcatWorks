@@ -1,5 +1,4 @@
-package com.zjp.ex01;
-
+package com.zjp.ex02;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,20 +8,18 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 /**
- * Created by stillhere on 2020/12/25.
+ * Created by stillhere on 2020/12/28.
  */
-public class HttpServer {
+public class HttpServer1 {
 
-    public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "webroot";
     private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
 
     private boolean shutdown = false;
 
     public static void main(String[] args) {
-        HttpServer httpServer = new HttpServer();
-        httpServer.await();
+        HttpServer1 server = new HttpServer1();
+        server.await();
     }
 
     public void await() {
@@ -47,7 +44,14 @@ public class HttpServer {
                 request.parse();
                 Response response = new Response(outputStream);
                 response.setRequest(request);
-                response.sendStaticResource();
+                //check
+                if (request.getUri().startsWith("/servlet/")) {
+                    ServletProcessor1 processor1 = new ServletProcessor1();
+                    processor1.process(request,response);
+                } else {
+                    StaticResourceProcessor processor = new StaticResourceProcessor();
+                    processor.process(request,response);
+                }
 
                 socket.close();
                 shutdown = request.getUri().equals(SHUTDOWN_COMMAND);

@@ -20,10 +20,7 @@ public class ResponseFacade implements ServletResponse {
         return null;
     }
 
-    @Override
-    public String getContentType() {
-        return null;
-    }
+
 
     @Override
     public ServletOutputStream getOutputStream() throws IOException {
@@ -35,20 +32,13 @@ public class ResponseFacade implements ServletResponse {
         return response.getWriter();
     }
 
-    @Override
-    public void setCharacterEncoding(String s) {
 
-    }
 
     @Override
     public void setContentLength(int i) {
 
     }
 
-    @Override
-    public void setContentLengthLong(long l) {
-
-    }
 
     @Override
     public void setContentType(String s) {
